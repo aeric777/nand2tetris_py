@@ -4,8 +4,7 @@
 // File name: projects/10/Square/SquareGame.jack
 
 // (same as projects/09/Square/SquareGame.jack)
-str = "this is a comment// 123" + "string part two"  // eliminate
-str = "test /** test /*"   /*eliminate*/
+
 /**
  * Implements the Square Dance game.
  * This simple game allows the user to move a black square around
