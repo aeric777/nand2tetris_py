@@ -14,7 +14,7 @@ import re
 #                   (2) parse jack code according to .jack grammar  -  CompilationEngine(class)
 # Input:        jack_list, out_mode
 # Output:       analyzed_list ('T.xml' or '.xml' mode)
-def jack_analyzer(jack_list, out_mode):
+def syntax_analyzer(jack_list, out_mode):
     analyzed_list = []
 
     jack_tokenizer = JackTokenizer(jack_list)  # instantiate JackTokenizer with parameter jack_list

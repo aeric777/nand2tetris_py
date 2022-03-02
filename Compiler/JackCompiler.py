@@ -14,13 +14,12 @@ __author__ = 'eric'
 import getopt
 import os
 import sys
-from JackAnalyzer import jack_analyzer
+from JackAnalyzer import syntax_analyzer
 
 
 # ----------------------------------------------------------
 # Description:
 #   receive command parameters, validating input path, process each .jack file
-# ----------------------------------------------------------
 def main():
     PROC_MODE = '.xml'  # 'T.xml' | '.xml' | '.vm'
     input_path = recv_opt_arg(sys.argv)
@@ -66,7 +65,6 @@ def main():
 #       receive command line input. return input_path or print usage
 # Output:
 #       input_path
-# ----------------------------------------------------------
 def recv_opt_arg(argv):
     # print('sys.argv=| ', argv, ' |')
 
@@ -95,7 +93,6 @@ def recv_opt_arg(argv):
 # ----------------------------------------------------------
 # Description:
 #   print usage information of this script
-# ----------------------------------------------------------
 def print_usage(cmd):
     print(('*********************************************************\n' +
            ' --* This massage gave you some detailed information! *--\n' +
@@ -118,7 +115,6 @@ def print_usage(cmd):
 #       2.code_generation
 # Input:
 #       in_file_path, out_file_path, out_mode
-# ----------------------------------------------------------
 def process_file(in_file_path, out_file_path, out_mode):
     print('[Log]:\t--* JackCompiler, in_file_path: ' + in_file_path + ' *--')
 
@@ -126,7 +122,7 @@ def process_file(in_file_path, out_file_path, out_mode):
         jack_list = f.readlines()
 
     # 1.code_analyzer
-    analyzed_list = jack_analyzer(jack_list, out_mode)  # list of str, each element is one line of (T.xml|.xml) file
+    analyzed_list = syntax_analyzer(jack_list, out_mode)  # list of str, each element is one line of (T.xml|.xml) file
     print('[Log]:\tAnalyzer:\tDone')
     print('[Log]:\tOutput mode:\t' + out_mode)
     print('[Log]:\tLength:\t\t' + str(len(analyzed_list)))
@@ -146,7 +142,6 @@ def process_file(in_file_path, out_file_path, out_mode):
 #       writing out_list into file named out_file_path
 # Input:
 #       out_file_path, out_list
-# ----------------------------------------------------------
 def write_out_file(out_file_path, out_list):
     with open(out_file_path, 'w') as f:
         for line in out_list:
