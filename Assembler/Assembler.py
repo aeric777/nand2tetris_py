@@ -96,7 +96,7 @@ class SymbolTable(object):
         for line in self.no_comment_list:
             if self.contain_label(line):
                 cur_label = line[1:-1]
-                self.symbol_table.update({cur_label: str(len(temp_list))})
+                self.symbol_table[cur_label] = str(len(temp_list))
             else:
                 temp_list.append(line)
         self.no_comment_list = temp_list
@@ -122,7 +122,7 @@ class SymbolTable(object):
             if self.contain_variable(line):
                 cur_variable = line[1:]
                 if cur_variable not in self.symbol_table:
-                    self.symbol_table.update({cur_variable: str(pointer_in_ram)})
+                    self.symbol_table[cur_variable] = str(pointer_in_ram)
                     pointer_in_ram += 1
 
     # ----------------------------------------------------------
