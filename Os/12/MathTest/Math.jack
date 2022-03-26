@@ -1,0 +1,144 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A basic math library.
+ */
+class Math {
+    static int powersOfTwo;  // initialize a static array
+    
+    /** Initializes the library. */
+    function void init() {
+        let powersOfTwo = Array.new(16);
+        let powersOfTwo[0] = 1;
+        let powersOfTwo[1] = 2;
+        let powersOfTwo[2] = 4;
+        let powersOfTwo[3] = 8;
+        let powersOfTwo[4] = 16;
+        let powersOfTwo[5] = 32;
+        let powersOfTwo[6] = 64;
+        let powersOfTwo[7] = 128;
+        let powersOfTwo[8] = 256;
+        let powersOfTwo[9] = 512;
+        let powersOfTwo[10] = 1024;
+        let powersOfTwo[11] = 2048;
+        let powersOfTwo[12] = 4096;
+        let powersOfTwo[13] = 8192;
+        let powersOfTwo[14] = 16384;
+        let powersOfTwo[15] = 16384+16384;
+        return;
+    }
+
+    /** return n-th bit of integer x */
+    function boolean bit(int x, int n) {
+        return ~((x & powersOfTwo[n]) = 0);  // and operation between mask powersOfTwo[n] and integer x 
+    }
+    
+    /** return two to the power */
+    function int twoToThe(int power) {
+        return powersOfTwo[power];
+    }
+    
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if( x < 0 ) {
+            let x = -x;
+        }
+        return x;
+    }
+
+    /** Returns the product of x and y. */
+    function int multiply(int x, int y) {
+        var int sum, shiftedX, i;  // all local variable are initialized into 0
+        // sum      - record the output sum
+        // shiftedX - shift x to the left
+        // i        - record loop times
+        
+        let shiftedX = x;
+        while( i < 16 ) {   // 16-bit numbers
+            if(Math.bit(y, i)) {
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;  // shift x to the left by 1 bit
+            let i = i + 1;
+        }
+        return sum;
+    }
+    
+    /** Returns the integer part of x/y. */
+    function int divide(int x, int y) {
+        var int negX, negY;
+        var int q;
+        var int result;
+        
+        let negX = x < 0;
+        let negY = y < 0;
+        let x = Math.abs(x);
+        let y = Math.abs(y);
+
+        if( y > x ) {
+            return 0;
+        }
+        
+        let q = Math.divide(x, y+y);
+        
+        if( x-(2*q*y) < y ) {
+            let result = q+q;
+        }else {
+            let result = q+q+1;
+        }
+        
+        if( negX = negY ) {
+            return result;
+        }else {
+            return -result;
+        }
+    }
+    
+    /** Returns the remainder part of x/y */
+    function int mod(int x, int y) {
+        var int q;
+        
+        let q = Math.divide(x, y);
+        return x - (q*y);
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int i, y;
+        var int approx;
+        var int approxQuared;
+        
+        // word length of jack is 16-bit
+        let i = 7;      // = #bits / 2 - 1
+        while( ~(i < 0) ) {
+            let approx = y + powersOfTwo[i];
+            let approxQuared = approx * approx;
+            if( ~(approxQuared > x) & (approxQuared > 0) ) {    // in case of overflow
+                let y = approx;
+            }
+            let i = i - 1;
+        }
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if( a > b ) {
+            return a;
+        }else {
+            return b;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if( a < b ) {
+            return a;
+        }else {
+            return b;
+        }
+    }
+}
